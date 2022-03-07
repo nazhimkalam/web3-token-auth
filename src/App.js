@@ -5,7 +5,10 @@ import axios from "axios"
 
 const App = () => {
   const handleConnection = async () => {
-    // connect the current page to the meta mask provider
+    if (window.ethereum.selectedAddress === null || window.ethereum.selectedAddress === undefined) {
+      await window.ethereum.enable();
+    }
+  
     const token = await generateToken();
     console.log("Token from the client: ", token);
 
