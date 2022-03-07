@@ -12,7 +12,8 @@ const App = () => {
     const token = await generateToken();
     console.log("Token from the client: ", token);
 
-    const response = await axios.post("http://localhost:5000/", { name: "John Doe" }, { headers: { Authorization: `Bearer ${token}` } } );
+    // Test API call to the server
+    const response = await axios.post("http://localhost:5000/", { name: "Sample name" }, { headers: { Authorization: `Bearer ${token}` } } );
     console.log(response);
   };
 
