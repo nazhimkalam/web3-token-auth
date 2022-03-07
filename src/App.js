@@ -19,7 +19,8 @@ const App = () => {
 
   const generateToken = async () => {
     if (!window.ethereum) {
-      return console.log('Please install and activate the metamask extension!');
+      alert('Please install and activate the metamask extension!');
+      return;
     }
   
     const provider =  new ethers.providers.Web3Provider(window.ethereum);
@@ -33,7 +34,8 @@ const App = () => {
         catch (err) {
           const { reason } = err;
           if (reason === "unknown account #0") {
-            return console.log('Have you unlocked metamask and are connected to this page?')
+            alert('Have you unlocked metamask and are connected to this page?');
+            return;
           }
   
           console.log(err.toString());
