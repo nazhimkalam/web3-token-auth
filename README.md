@@ -1,1 +1,1 @@
-# Metamask auth using Web3 and Ethereum, along with Web3 tokens
+# Web3-auth-tokens
