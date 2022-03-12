@@ -1,19 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { ethers } from "ethers";
 import Web3Token from "web3-token";
 import axios from "axios"
 
 const App = () => {
-  const handleConnection = async () => {
-    if (window.ethereum.selectedAddress === null || window.ethereum.selectedAddress === undefined) {
-      await window.ethereum.enable();
-    }
-  
-    const token = await generateToken();
-    console.log("Token from the client: ", token);
+  const [accounts, setAccounts] = useState([]);
 
-    const response = await axios.post("http://localhost:5000/", { name: "John Doe" }, { headers: { Authorization: `Bearer ${token}` } } );
-    console.log(response);
+  const handleConnection = async () => {
+    try {
+      if (window.ethereum.selectedAddress === undefined || window.ethereum.selectedAddress === null) {
+        let ethAccounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        setAccounts(ethAccounts);
+      }
+
+      console.log("accounts : ", accounts);
+
+      const token = await generateToken();
+      console.log("Token from the client: ", token);
+
+      // const response = await axios.post("http://localhost:5000/", { name: "John Doe" }, { headers: { Authorization: `Bearer ${token}` } } );
+      // console.log(response);
+    } catch (error) {
+      console.log(error);
+      throw Error(error);
+    }
   };
 
 
@@ -22,7 +32,7 @@ const App = () => {
       alert('Please install and activate the metamask extension!');
       return;
     }
-  
+
     const provider =  new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
   
